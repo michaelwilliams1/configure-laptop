@@ -1,3 +1,15 @@
+@[CmdletBinding()]
+param (
+    [Parameter(Manditory)]
+    [string]
+    $FirstName,
+    [Parameter(Manditory)]
+    [string]
+    $LastName,
+    [Parameter(Manditory)]
+    [string]
+    $EmailAddress
+)
 try 
 {
     Get-Package -Name Git -ErrorAction SilentlyContinue | Out-Null
@@ -12,3 +24,7 @@ catch
     winget install --id Git.Git -e --source winget
     Write-Output "Git installed"
 }
+
+git config --global user.name $FirstName $LastName
+git config --global user.email $EmailAddress
+
