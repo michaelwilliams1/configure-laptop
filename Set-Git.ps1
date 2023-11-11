@@ -1,30 +1,27 @@
-@[CmdletBinding()]
+[CmdletBinding()]
 param (
-    [Parameter(Manditory)]
-    [string]
-    $FirstName,
-    [Parameter(Manditory)]
-    [string]
-    $LastName,
-    [Parameter(Manditory)]
-    [string]
-    $EmailAddress
+  [Parameter(Manditory=$true)]
+  [string]
+  $FullName,
+  [Parameter(Manditory)]
+  [string]
+  $EmailAddress
 )
+
 try 
 {
-    Get-Package -Name Git -ErrorAction SilentlyContinue | Out-Null
-    Write-Output "Git is already installed"
+  Get-Package -Name Git -ErrorAction SilentlyContinue | Out-Null
+  Write-Output "Git is already installed"
 }
 catch
 {
-    Write-Output "Git is not installed, downloading..."
-    Invoke-WebRequest -Uri https://git-scm.com/download/win 
+  Write-Output "Installing Git"
+  winget install --id Git.Git -e --source winget
+  Write-Output "Git installed"
 
-    Write-Output "Installing Git"
-    winget install --id Git.Git -e --source winget
-    Write-Output "Git installed"
+  git config --global user.name "$FullName"
+  git config --global user.email "$EmailAddress"
+  git config --global core.autocrlf true
+  
+  Write-Output "Git configured"
 }
-
-git config --global user.name $FirstName $LastName
-git config --global user.email $EmailAddress
-
