@@ -10,3 +10,4 @@ param (
 
 ./Set-Git.ps1 -FullName $FullName -EmailAddress $EmailAddress -ErrorAction Stop
 ./Set-Chocolatey.ps1 -ErrorAction Stop
+./Set-Insomnia.ps1 -ErrorAction Stop
